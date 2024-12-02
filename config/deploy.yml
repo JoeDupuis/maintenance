@@ -29,10 +29,18 @@ registry:
   password:
     - SKIFF_REGISTRY_PASSWORD
 
-# Check /up against 80
-healthcheck:
-  port: 80
+proxy:
+  healthcheck:
+    path: /up
 
-# Use a different ssh user than root
-# ssh:
-#   user: app
+builder:
+  arch: amd64
+
+accessories:
+  cloudflared:
+    host: maintenance
+    image: cloudflare/cloudflared:latest
+    cmd: tunnel --no-autoupdate run
+    env:
+      secret:
+        - TUNNEL_TOKEN
