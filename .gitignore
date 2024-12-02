@@ -1,0 +1,15 @@
+# Ignore env file
+/.env
+
+# Devenv
+/.direnv
+/.envrc
+.devenv*
+devenv.local.nix
+vendor/bundle
+
+# direnv
+.direnv
+
+# pre-commit
+.pre-commit-config.yaml
