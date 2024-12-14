@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+set -e
+
+start_if_stopped() {
+  local instance=$1
+  if incus info "$instance" | grep -q "Status: STOPPED"; then
+    echo "Starting $instance..."
+    incus start "$instance"
+  else
+    echo "$instance is already running."
+  fi
+}
+
+stop_if_running() {
+  local instance=$1
+  if incus info "$instance" | grep -q "Status: RUNNING"; then
+    echo "Stopping $instance..."
+    incus stop "$instance"
+  else
+    echo "$instance is already stopped."
+  fi
+}
+
+
+echo "Activating maintenance mode..."
+bin/activate-maintenance
+
+
+start_if_stopped "local:cloudflared"
+start_if_stopped "local:maintenance"
+
+echo "Waiting for the new tunnel to come online..."
+sleep 10
+stop_if_running "tinkles:cloudflared"
