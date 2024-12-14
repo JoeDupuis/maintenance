@@ -3,10 +3,17 @@ service: maintenance
 image: joedupuis/maintenance
 
 servers:
-  - maintenance
+  - maintenance-tinkles
+  - maintenance-birdperson
 
 proxy:
   host: null
+  forward_headers: true
+  logging:
+    request_headers:
+      - X-Forwarded-Proto
+    response_headers:
+      - X-Request-ID
 
 registry:
   username: joedupuis
