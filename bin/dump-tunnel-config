@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+export API_TOKEN="op://kamal-secrets/clouflared-maintenance/API_TOKEN"
+export TUNNEL_ID="op://kamal-secrets/clouflared-maintenance/TUNNEL_ID"
+export ACCOUNT_ID="op://kamal-secrets/clouflared-maintenance/ACCOUNT_ID"
+
+
+op run --no-masking -- bash -c 'curl --request GET \
+   --header "Content-Type: application/json" \
+   --url https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/cfd_tunnel/$TUNNEL_ID/configurations \
+   --header "Authorization: Bearer $API_TOKEN"' | jq -c '.result'
