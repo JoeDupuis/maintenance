@@ -9,4 +9,4 @@ op run --no-masking -- bash -c 'curl --request PUT \
    --header "Content-Type: application/json" \
    --url https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/cfd_tunnel/$TUNNEL_ID/configurations \
    --header "Authorization: Bearer $API_TOKEN" \
-   --data $MAINTENANCE_CONFIG'
+   --data "$MAINTENANCE_CONFIG"'
